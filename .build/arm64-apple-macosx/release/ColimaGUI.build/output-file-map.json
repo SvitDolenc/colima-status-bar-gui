@@ -1,0 +1,25 @@
+{
+  "": {
+    "dependencies": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaGUI.d",
+    "object": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaGUI.o",
+    "swift-dependencies": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/primary.swiftdeps"
+  },
+  "/Users/svitdolenc/Desktop/private/colima-gui/ColimaGUI/AppMain.swift": {
+    "object": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/AppMain.swift.o",
+    "swiftmodule": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/AppMain~partial.swiftmodule",
+    "swift-dependencies": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/AppMain.swiftdeps",
+    "diagnostics": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/AppMain.dia"
+  },
+  "/Users/svitdolenc/Desktop/private/colima-gui/ColimaGUI/ColimaManager.swift": {
+    "object": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaManager.swift.o",
+    "swiftmodule": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaManager.swiftdeps",
+    "diagnostics": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/ColimaManager.dia"
+  },
+  "/Users/svitdolenc/Desktop/private/colima-gui/ColimaGUI/StatusView.swift": {
+    "object": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/StatusView.swift.o",
+    "swiftmodule": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/StatusView~partial.swiftmodule",
+    "swift-dependencies": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/StatusView.swiftdeps",
+    "diagnostics": "/Users/svitdolenc/Desktop/private/colima-gui/.build/arm64-apple-macosx/release/ColimaGUI.build/StatusView.dia"
+  }
+}
