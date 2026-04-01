@@ -2,6 +2,8 @@
 
 build:
 	swift build -c release
+	mkdir -p ColimaGUI.app/Contents/MacOS
+	cp .build/release/ColimaGUI ColimaGUI.app/Contents/MacOS/
 
 run:
 	swift run
