@@ -12,12 +12,18 @@ enum ColimaStatus: String, Codable {
 struct ColimaProfile: Codable {
     let name: String
     let status: String
+    let arch: String
+    let cpus: Int
+    let memory: Int64
+    let disk: Int64
+    let runtime: String
 }
 
 class ColimaManager: ObservableObject {
     @Published var status: ColimaStatus = .unknown
     @Published var isTransitioning: Bool = false
     @Published var lastError: String? = nil
+    @Published var currentProfile: ColimaProfile? = nil
     
     private var timer: Timer?
     private let colimaPath: String
@@ -25,7 +31,13 @@ class ColimaManager: ObservableObject {
     init() {
         // Try to find colima binary in common paths
         let fileManager = FileManager.default
-        let paths = ["/opt/homebrew/bin/colima", "/usr/local/bin/colima", "/usr/bin/colima"]
+        let homeDir = ProcessInfo.processInfo.environment["HOME"] ?? ""
+        let paths = [
+            "/opt/homebrew/bin/colima",
+            "/usr/local/bin/colima",
+            "/usr/bin/colima",
+            "\(homeDir)/.homebrew/bin/colima"
+        ]
         self.colimaPath = paths.first(where: { fileManager.fileExists(atPath: $0) }) ?? "colima"
         
         startPolling()
@@ -55,20 +67,25 @@ class ColimaManager: ObservableObject {
                         let lines = outputString.components(separatedBy: .newlines).filter { !$0.isEmpty }
                         
                         var foundStatus: ColimaStatus = .stopped
+                        var foundProfile: ColimaProfile? = nil
+                        
                         for line in lines {
                             if let lineData = line.data(using: .utf8),
                                let profile = try? decoder.decode(ColimaProfile.self, from: lineData),
                                profile.name == "default" {
                                 foundStatus = ColimaStatus(rawValue: profile.status) ?? .unknown
+                                foundProfile = profile
                                 break
                             }
                         }
                         self.status = foundStatus
+                        self.currentProfile = foundProfile
                         self.lastError = nil
                     }
                 case .failure(let error):
                     self.status = .error
                     self.lastError = error.localizedDescription
+                    self.currentProfile = nil
                 }
             }
         }
@@ -120,6 +137,17 @@ class ColimaManager: ObservableObject {
     private func runCommand(args: [String]) async -> Result<Data, Error> {
         return await withCheckedContinuation { continuation in
             let process = Process()
+            
+            // Set environment to include common Homebrew paths
+            var env = ProcessInfo.processInfo.environment
+            let homebrewPaths = "/opt/homebrew/bin:/usr/local/bin"
+            if let existingPath = env["PATH"] {
+                env["PATH"] = "\(homebrewPaths):\(existingPath)"
+            } else {
+                env["PATH"] = homebrewPaths
+            }
+            process.environment = env
+            
             process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
             process.arguments = [colimaPath] + args
             
@@ -132,7 +160,7 @@ class ColimaManager: ObservableObject {
                 let data = pipe.fileHandleForReading.readDataToEndOfFile()
                 process.waitUntilExit()
                 
-                if process.terminationStatus == 0 || args.contains("list") {
+                if process.terminationStatus == 0 || (args.contains("list") && process.terminationStatus != 127) {
                     continuation.resume(returning: .success(data))
                 } else {
                     let error = String(data: data, encoding: .utf8) ?? "Unknown error"

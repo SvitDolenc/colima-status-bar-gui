@@ -21,6 +21,25 @@ struct StatusView: View {
                     .padding(.bottom, 5)
             }
             
+            if let profile = manager.currentProfile, manager.status == .running {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Profile: \(profile.name)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                    
+                    Group {
+                        Text("Arch: \(profile.arch)")
+                        Text("CPUs: \(profile.cpus)")
+                        Text("RAM: \(formatBytes(profile.memory))")
+                        Text("Disk: \(formatBytes(profile.disk))")
+                        Text("Runtime: \(profile.runtime)")
+                    }
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                }
+                .padding(.bottom, 5)
+            }
+            
             Divider()
             
             Button(action: {
@@ -49,6 +68,13 @@ struct StatusView: View {
         }
         .padding()
         .frame(width: 200)
+    }
+    
+    private func formatBytes(_ bytes: Int64) -> String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useGB, .useMB]
+        formatter.countStyle = .binary
+        return formatter.string(fromByteCount: bytes)
     }
     
     private var statusColor: Color {

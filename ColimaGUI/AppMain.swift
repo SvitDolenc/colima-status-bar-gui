@@ -11,7 +11,6 @@ struct ColimaGUIApp: App {
             HStack {
                 Image(systemName: manager.status == .running ? "circle.fill" : "circle")
                     .foregroundColor(statusColor)
-                Text("Colima")
             }
         }
         .menuBarExtraStyle(.window)
