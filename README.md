@@ -22,10 +22,12 @@ To build a release binary:
 ```bash
 make build
 ```
-The binary will be located at `.build/release/ColimaGUI`.
 
 ## Usage
 Click the Colima icon (a circle) in your menu bar to see the status and control buttons.
 - 🟢 Green: Running
 - ⚪️ Gray: Stopped
 - 🟡 Yellow: Starting/Stopping
+
+
+![screen shot](public/screenshot.png)
